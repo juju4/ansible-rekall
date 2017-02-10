@@ -7,8 +7,10 @@ rekall_deps:
   - git
   - gcc-c++
   - readline
-  - readline-devel
-  - readline-static
+  - patch
+## not needed in kitchen/lxd
+#  - readline-devel
+#  - readline-static
   - libstdc++-devel
 ## SNI
   - gcc
