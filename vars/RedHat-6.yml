@@ -8,6 +8,7 @@ rekall_deps:
   - gcc-c++
   - readline
   - patch
+  - make
 ## not needed in kitchen/lxd
 #  - readline-devel
 #  - readline-static
