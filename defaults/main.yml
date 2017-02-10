@@ -1,0 +1,9 @@
+---
+
+rekall_virtualenv: /usr/local/share/env-rekall
+rekall_with_agent: true
+
+## Warning! big download ~4GB, feb 2017
+rekall_dl_profiles: false
+rekall_profiles: /usr/local/share/rekall-profiles
+

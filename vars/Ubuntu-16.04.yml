@@ -1,0 +1,13 @@
+---
+
+rekall_deps:
+# - python3
+  - python-virtualenv
+  - libncurses5-dev
+  - git
+## SNI
+  - build-essential
+  - libssl-dev
+  - libffi-dev
+  - python-dev
+
