@@ -7,6 +7,8 @@ rekall_deps:
   - git
   - gcc-c++
   - readline
+  - readline-devel
+  - readline-static
   - libstdc++-devel
 ## SNI
   - gcc
