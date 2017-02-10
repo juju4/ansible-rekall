@@ -5,6 +5,9 @@ rekall_deps:
   - python-virtualenv
   - ncurses-devel
   - git
+  - gcc-c++
+  - readline
+  - libstdc++-devel
 ## SNI
   - gcc
   - openssl-devel
