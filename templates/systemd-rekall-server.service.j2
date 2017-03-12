@@ -1,0 +1,15 @@
+## {{ ansible_managed }}
+[Unit]
+Description=Rekall agent service
+After=network.target syslog.target
+Documentation=https://github.com/google/rekall/tree/master/rekall-agent
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecReload=/bin/systemctl --no-block reload rekall-server@http_server.service rekall-server@worker.service rekall-server@agent_controller.service
+ExecStart=/bin/systemctl --no-block start rekall-server@http_server.service rekall-server@worker.service rekall-server@agent_controller.service
+ExecStop=/bin/systemctl --no-block stop rekall-server@http_server.service rekall-server@worker.service rekall-server@agent_controller.service
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+## {{ ansible_managed }}
+[Unit]
+Description=Rekall agent service %I
+ReloadPropagatedFrom=rekall-server.service
+After=network.target syslog.target
+Documentation=https://github.com/google/rekall/tree/master/rekall-agent
+
+[Service]
+Type=simple
+PrivateTmp=true
+Restart=on-failure
+ExecStart={{ rekall_virtualenv }}/bin/rekall -v --agent_config {{ rekallagent_roothttp }}/server.config.yaml %I
+
+[Install]
+WantedBy=multi-user.target

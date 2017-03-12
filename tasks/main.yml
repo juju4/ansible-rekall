@@ -13,3 +13,7 @@
 #- include: pip-upgrade.yml
 - include: rekall.yml
 
+- include: rekall-agent-http-server.yml
+  when: rekall_with_agentserver
+- include: rekall-agent.yml
+  when: rekall_with_agent

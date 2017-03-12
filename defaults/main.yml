@@ -1,9 +1,19 @@
 ---
 
 rekall_virtualenv: /usr/local/share/env-rekall
-rekall_with_agent: true
 
 ## Warning! big download ~4GB, feb 2017
 rekall_dl_profiles: false
 rekall_profiles: /usr/local/share/rekall-profiles
+
+rekall_with_agent: true
+rekallagent_etc: /usr/local/share/env-rekall/etc
+## for agent http server
+rekall_with_agentserver: false
+## ansible inventory name
+rekallagent_servername: localhost
+rekallagent_roothttp: /tmp/new_HTTP
+## public FQDN
+rekallagent_ip: 127.0.0.1
+rekallagent_port: 8000
 

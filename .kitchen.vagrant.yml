@@ -11,9 +11,9 @@ provisioner:
   name: ansible_playbook
   roles_path: ../../roles
   hosts: test-kitchen
-#  ansible_verbose: true
-  ansible_verbose: false
-  ansible_verbosity: 3
+  ansible_verbose: true
+#  ansible_verbose: false
+  ansible_verbosity: 4
   ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 
 platforms:
@@ -25,4 +25,9 @@ suites:
   - name: default
     run_list:
     attributes:
-
+  - name: default-server
+    run_list:
+    attributes:
+    includes:
+      - ubuntu-16.04
+      - centos-7.1

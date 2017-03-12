@@ -53,6 +53,12 @@ $ vagrant ssh
 
 ## Troubleshooting & Known issues
 
+* in kitchen lxd, rekall-server systemd services don't start correctly
+```
+Failed to kill control group /lxc/default-server-ubuntu-1604-1489354654/system.slice/system-rekall\x2dserver.
+```
+Works fine under kitchen vagrant (virtualbox)
+
 
 ## License
 

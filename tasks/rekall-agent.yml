@@ -1,0 +1,35 @@
+---
+
+- block:
+    - name: install rekall-agent systemd configuration
+      template:
+        src: "systemd-{{ item }}.service.j2"
+        dest: "/lib/systemd/system/{{ item }}.service"
+        mode: '0644'
+        backup: yes
+      with_items:
+        - 'rekall-agent'
+    - name: enable and start rekall-agent systemd service
+      service:
+        name: rekall-agent
+        enabled: yes
+        state: 'started'
+      ignore_errors: true
+  when: ansible_service_mgr == 'systemd'
+
+- block:
+    - name: Retrieve rekall client configuration file to orchestrator
+      fetch: src="{{ item }}" dest=tmp/ mode=0400
+      with_items:
+        - "{{ rekallagent_roothttp }}/client.config.yaml"
+      delegate_to: "{{ rekallagent_servername }}"
+    - name: ensure rekallagent etc dir exists
+      file: "dest={{ rekallagent_etc }} state=directory mode=0755"
+    - name: set up rekallagent config on client
+      copy: src="tmp/{{ item }}" dest="{{ rekallagent_etc }}" mode=0600
+      with_items:
+        - "client.config.yaml"
+      notify:
+        - rekallagent restart
+  when: rekallagent_servername != 'localhost'
+

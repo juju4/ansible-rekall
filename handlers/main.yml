@@ -1,0 +1,5 @@
+---
+
+- name: rekallagent restart
+  service: name=rekall-agent state=restarted
+
