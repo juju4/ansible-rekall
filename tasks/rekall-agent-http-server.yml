@@ -29,6 +29,7 @@
       with_items:
         - 'rekall-server'
         - 'rekall-server@'
+        - 'rekall-server-worker'
     - name: enable and start rekall systemd service
       service:
         name: rekall-server

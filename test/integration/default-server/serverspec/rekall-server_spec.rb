@@ -4,6 +4,8 @@ require 'serverspec'
 # Required by serverspec
 set :backend, :exec
 
+set rekallserver_etc = '/etc/rekall-server'
+
 describe service('rekall-server') do
   it { should be_enabled }
   it { should be_running }
@@ -11,10 +13,7 @@ end
 describe service('rekall-server@http_server') do
   it { should be_running }
 end
-describe service('rekall-server@worker') do
-  it { should be_running }
-end
-describe service('rekall-server@agent_controller') do
+describe service('rekall-server-worker') do
   it { should be_running }
 end
 describe service('rekall-agent') do
@@ -26,10 +25,28 @@ describe file('/usr/local/share/env-rekall/bin/rekall') do
   it { should exist }
   it { should be_executable }
 end
-describe file('/tmp/new_HTTP/server.config.yaml') do
+describe file("#{rekallserver_etc}/server.config.yaml") do
   it { should exist }
 end
-describe file('/tmp/new_HTTP/client.config.yaml') do
+describe file("#{rekallserver_etc}/client.config.yaml") do
   it { should exist }
 end
 
+describe port(8000) do
+  it { should be_listening.with('tcp') }
+end
+
+describe command("rekall --agent_config #{rekallserver_etc}/server.config.yaml run --script \"session.SetParameter('agent_mode', 'controller'); show_clients()\"") do
+  its(:stdout) { should match /default-server-/ }
+  its(:stdout) { should match /Linux 64bit/ }
+  its(:stdout) { should_not match /Error code 404./ }
+#  its(:stderr) { should match /No such file or directory/ }
+  its(:exit_status) { should eq 0 }
+end
+
+describe file('/var/log/syslog') do
+  it { should exist }
+  its(:content) { should match /rekall.*:Serving HTTP on 127.0.0.1 port 8000/ }
+  its(:content) { should match /rekall.*GET \/tickets\/HuntStatus\?action/ }
+  its(:content) { should_not match /rekall.*IOError: / }
+end

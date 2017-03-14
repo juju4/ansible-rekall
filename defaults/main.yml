@@ -12,7 +12,8 @@ rekallagent_etc: /usr/local/share/env-rekall/etc
 rekall_with_agentserver: false
 ## ansible inventory name
 rekallagent_servername: localhost
-rekallagent_roothttp: /tmp/new_HTTP
+## Note: don't use tmp as systemd is configured with PrivateTmp
+rekallagent_roothttp: /etc/rekall-server
 ## public FQDN
 rekallagent_ip: 127.0.0.1
 rekallagent_port: 8000

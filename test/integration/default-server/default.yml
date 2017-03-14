@@ -4,7 +4,7 @@
 #- hosts: test-kitchen
   vars:
     - rekall_with_agentserver: true
-    - rekallagent_etc: '/tmp/new_HTTP'
+    - rekallagent_etc: '/etc/rekall-server'
   roles:
     - juju4.rekall
 
