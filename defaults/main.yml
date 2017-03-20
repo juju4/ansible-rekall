@@ -18,3 +18,8 @@ rekallagent_roothttp: /etc/rekall-server
 rekallagent_ip: 127.0.0.1
 rekallagent_port: 8000
 
+rekall_win_url: 'https://github.com/google/rekall/releases/download/v1.6.0/Rekall_1.6.0_Gotthard_x64.exe'
+## not supported currently by win_get_url
+#rekall_win_hash: 'sha256:aaaa'
+rekall_win_dest: 'c:\Windows'
+

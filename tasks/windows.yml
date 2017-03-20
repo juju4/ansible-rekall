@@ -1,0 +1,7 @@
+---
+
+- name: Windows | download rekall
+  win_get_url:
+    url: "{{ rekall_win_url }}"
+    dest: "{{ rekall_win_dest }}\\{{ rekall_win_url | basename }}"
+
