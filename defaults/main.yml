@@ -8,6 +8,7 @@ rekall_profiles: /usr/local/share/rekall-profiles
 
 rekall_with_agent: true
 rekallagent_etc: /usr/local/share/env-rekall/etc
+rekall_with_agent_service_enabled: false
 ## for agent http server
 rekall_with_agentserver: false
 ## ansible inventory name

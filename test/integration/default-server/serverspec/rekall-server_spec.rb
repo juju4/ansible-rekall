@@ -36,17 +36,28 @@ describe port(8000) do
   it { should be_listening.with('tcp') }
 end
 
-describe command("rekall --agent_config #{rekallserver_etc}/server.config.yaml run --script \"session.SetParameter('agent_mode', 'controller'); show_clients()\"") do
+describe command("/usr/local/bin/rekall --agent_config #{rekallserver_etc}/server.config.yaml run --script \"session.SetParameter('agent_mode', 'controller'); show_clients()\"") do
   its(:stdout) { should match /default-server-/ }
-  its(:stdout) { should match /Linux 64bit/ }
+## might be splitted in 2 lines...
+  its(:stdout) { should match /Linux/ }
+  its(:stdout) { should match /64bit/ }
   its(:stdout) { should_not match /Error code 404./ }
 #  its(:stderr) { should match /No such file or directory/ }
   its(:exit_status) { should eq 0 }
 end
 
-describe file('/var/log/syslog') do
+describe file('/var/log/syslog'), :if => os[:family] == 'ubuntu' do
   it { should exist }
+  it { should be_file }
   its(:content) { should match /rekall.*:Serving HTTP on 127.0.0.1 port 8000/ }
   its(:content) { should match /rekall.*GET \/tickets\/HuntStatus\?action/ }
   its(:content) { should_not match /rekall.*IOError: / }
 end
+describe file('/var/log/messages'), :if => os[:family] == 'redhat' do
+  it { should exist }
+  it { should be_file }
+  its(:content) { should match /rekall.*:Serving HTTP on 127.0.0.1 port 8000/ }
+  its(:content) { should match /rekall.*GET \/tickets\/HuntStatus\?action/ }
+  its(:content) { should_not match /rekall.*IOError: / }
+end
+

@@ -5,6 +5,8 @@ rekall_deps:
   - python-virtualenv
   - libncurses5-dev
   - git
+  - gcc
+  - g++
 ## SNI
   - build-essential
   - libssl-dev

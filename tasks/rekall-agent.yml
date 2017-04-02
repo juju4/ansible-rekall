@@ -3,18 +3,36 @@
 - block:
     - name: install rekall-agent systemd configuration
       template:
-        src: "systemd-{{ item }}.service.j2"
-        dest: "/lib/systemd/system/{{ item }}.service"
+        src: "systemd-rekall-agent.service.j2"
+        dest: "/lib/systemd/system/rekall-agent.service"
         mode: '0644'
         backup: yes
-      with_items:
-        - 'rekall-agent'
+      register: systemdconf
+      ignore_errors: true
+    - block:
+        - include: "immutable.yml target_dir=/lib/systemd/system state=pre"
+        - name: install rekall-agent systemd configuration
+          template:
+            src: "systemd-rekall-agent.service.j2"
+            dest: "/lib/systemd/system/rekall-agent.service"
+            mode: '0644'
+            backup: yes
+        - include: "immutable.yml target_dir=/lib/systemd/system state=post"
+      when: systemdconf|failed
     - name: enable and start rekall-agent systemd service
       service:
         name: rekall-agent
         enabled: yes
         state: 'started'
       ignore_errors: true
+      when: rekall_with_agent_service_enabled
+    - name: disable and stop rekall-agent systemd service
+      service:
+        name: rekall-agent
+        enabled: no
+        state: 'stopped'
+      ignore_errors: true
+      when: not rekall_with_agent_service_enabled
   when: ansible_service_mgr == 'systemd'
 
 - block:

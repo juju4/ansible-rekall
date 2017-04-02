@@ -4,9 +4,11 @@
   package: name={{item}} state=present
   with_items: "{{ rekall_deps }}"
 
-## FIXME! html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
+- include: gcc.yml
+
+## html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
 - name: Install recent setuptools inside virtualenv
-  pip: "name=setuptools version=8.0 state=present virtualenv={{ rekall_virtualenv }}"
+  pip: "name=setuptools version=34.3.3 state=present virtualenv={{ rekall_virtualenv }}"
 - name: Install recent pip inside virtualenv
   pip: "name=pip version=9.0.1 state=present virtualenv={{ rekall_virtualenv }}"
 
