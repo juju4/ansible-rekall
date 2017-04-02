@@ -40,5 +40,5 @@
   when: (not cpp.stat.exists or (cpp.stat.lnk_source is defined and cpp.stat.lnk_source == "/usr/bin/None")) and gpp5.stat.exists and ansible_os_family == 'Debian' and ansible_distribution_release == 'xenial'
 - name: Ubuntu trusty | update default config to g++-4.8 for c++
   command: "update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-4.8 60"
-  when: (not gpp.stat.exists or (gpp.stat.lnk_source is defined and gpp.stat.lnk_source == "/usr/bin/None")) and gpp4.stat.exists and ansible_os_family == 'Debian' and ansible_distribution_release == 'trusty'
+  when: (not cpp.stat.exists or (cpp.stat.lnk_source is defined and cpp.stat.lnk_source == "/usr/bin/None")) and gpp4.stat.exists and ansible_os_family == 'Debian' and ansible_distribution_release == 'trusty'
 
