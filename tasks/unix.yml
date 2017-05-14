@@ -6,12 +6,16 @@
 - name: Include version-specific variables for RedHat
   include_vars: "RedHat-{{ ansible_distribution_version.split('.')[0] }}.yml"
   when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-- name: Include version-specific variables for Alpine
-  include_vars: "Alpine.yml"
-  when: ansible_os_family == "Alpine"
+- name: Include other distribution-specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: ansible_os_family == "Alpine" or ansible_distribution == 'MacOSX'
+
 
 #- include: pip-upgrade.yml
 - include: rekall.yml
+  when: ansible_distribution != 'MacOSX'
+- include: rekall-darwin.yml
+  when: ansible_distribution == 'MacOSX'
 
 - include: rekall-agent-http-server.yml
   when: rekall_with_agentserver
