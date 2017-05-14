@@ -8,21 +8,35 @@
 
 ## html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
 - name: Install recent setuptools inside virtualenv
-  pip: "name=setuptools version=33.1.1 state=present virtualenv={{ rekall_virtualenv }}"
+  pip:
+    name: setuptools
+    version: 33.1.1
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
 ## Result 'ImportError: No module named six.moves'
 #  pip: "name=setuptools version=34.3.3 state=present virtualenv={{ rekall_virtualenv }}"
 - name: Install recent pip inside virtualenv
-  pip: "name=pip version=9.0.1 state=present virtualenv={{ rekall_virtualenv }}"
+  pip:
+    name: pip
+    version: 9.0.1
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
 
 - name: Install rekall inside virtualenv
-  pip: "name={{item}} state=present virtualenv={{ rekall_virtualenv }}"
+  pip:
+    name: "{{item}}"
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
   with_items:
     - wheel
     - rekall
 ## to keep SNI issue at bay on older python
     - urllib3[secure]
 - name: Install rekall-agent inside virtualenv
-  pip: "name={{item}} state=present virtualenv={{ rekall_virtualenv }}"
+  pip:
+    name: "{{item}}"
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
   with_items:
     - rekall-agent
   when: rekall_with_agent
