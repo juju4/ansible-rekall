@@ -17,7 +17,7 @@ describe service('rekall-server-worker') do
   it { should be_running }
 end
 describe service('rekall-agent') do
-  it { should be_enabled }
+#  it { should be_enabled }
   it { should be_running }
 end
 
@@ -41,8 +41,15 @@ describe command("/usr/local/bin/rekall --agent_config #{rekallserver_etc}/serve
 ## might be splitted in 2 lines...
   its(:stdout) { should match /Linux/ }
   its(:stdout) { should match /64bit/ }
-  its(:stdout) { should_not match /Error code 404./ }
+  its(:stderr) { should_not match /Error code 404./ }
+  its(:stderr) { should_not match /<title>Error response<\/title>/ }
 #  its(:stderr) { should match /No such file or directory/ }
+  its(:exit_status) { should eq 0 }
+end
+describe command("/usr/local/bin/rekall --agent_config #{rekallserver_etc}/server.config.yaml run --script \"session.SetParameter('agent_mode', 'controller'); launch_hunt(\"ListProcessFlow\");\"") do
+  its(:stderr) { should_not match /Error code 404./ }
+  its(:stderr) { should_not match /<title>Error response<\/title>/ }
+  its(:stderr) { should_not match /NameError: name 'ListProcessFlow' is not defined/ }
   its(:exit_status) { should eq 0 }
 end
 
