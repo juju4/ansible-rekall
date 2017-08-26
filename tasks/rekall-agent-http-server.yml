@@ -46,3 +46,12 @@
       delegate_to: "{{ rekallagent_servername }}"
   when: rekallagent_servername != 'localhost'
 
+- name: use dedicate log and syslog target for rekall
+  template:
+    src: rsyslog-rekall.conf.j2
+    dest: /etc/rsyslog.d/40-rekall.conf
+    mode: '0644'
+    backup: yes
+  notify:
+    - restart rsyslog
+

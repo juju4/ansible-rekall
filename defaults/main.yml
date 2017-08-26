@@ -9,6 +9,7 @@ rekall_profiles: /usr/local/share/rekall-profiles
 rekall_with_agent: true
 rekallagent_etc: /usr/local/share/env-rekall/etc
 rekall_with_agent_service_enabled: false
+#rekall_syslog_target: '@@192.168.10.10'
 ## for agent http server
 rekall_with_agentserver: false
 ## ansible inventory name
