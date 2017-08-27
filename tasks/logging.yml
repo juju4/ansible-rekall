@@ -1,0 +1,33 @@
+---
+
+- name: Ensure rsyslog is present
+  package:
+    name: rsyslog
+    state: present
+
+- name: get rsyslog version
+  command: "rsyslogd -v | awk -F'[ ,]' '/rsyslogd/ { print $2 }'"
+  changed_when: false
+  register: rsyslog_v
+
+- name: ensure /etc/rsyslog.d exists
+  file: dest=/etc/rsyslog.d state=directory mode=0755
+
+- name: send rekall log to separate file through rsyslog
+  template:
+    src: rsyslog-rekall.conf.j2
+    dest: /etc/rsyslog.d/40-rekall.conf
+    mode: '0644'
+    backup: yes
+  notify:
+    - restart rsyslog
+
+- name: ensure /etc/logrotate.d exists
+  file: dest=/etc/logrotate.d state=directory mode=0755
+
+- name: add logrotate configuration for rekall.log
+  template:
+    src: logrotate-rekall.j2
+    dest: /etc/logrotate.d/rekall
+    mode: 0644
+    backup: yes
