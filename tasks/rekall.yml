@@ -22,6 +22,15 @@
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
 
+- name: Install versioned requirements inside virtualenv
+  pip:
+    name: "{{ item.n }}"
+    version: "{{ item.v }}"
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
+  with_items:
+    - { n: pyasn1, v: 0.3.2 }
+
 - name: Install rekall inside virtualenv
   pip:
     name: "{{item}}"
@@ -32,6 +41,7 @@
     - rekall
 ## to keep SNI issue at bay on older python
     - urllib3[secure]
+
 - name: Install rekall-agent inside virtualenv
   pip:
     name: "{{item}}"
