@@ -46,6 +46,11 @@
       delegate_to: "{{ rekallagent_servername }}"
   when: rekallagent_servername != 'localhost'
 
+- name: get rsyslog version
+  command: "rsyslogd -v | awk -F'[ ,]' '/rsyslogd/ { print $2 }'"
+  changed_when: false
+  register: rsyslog_v
+
 - name: use dedicate log and syslog target for rekall
   template:
     src: rsyslog-rekall.conf.j2

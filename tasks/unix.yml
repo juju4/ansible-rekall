@@ -10,7 +10,6 @@
   include_vars: "{{ ansible_distribution }}.yml"
   when: ansible_os_family == "Alpine" or ansible_distribution == 'MacOSX'
 
-
 #- include: pip-upgrade.yml
 - include: rekall.yml
   when: ansible_distribution != 'MacOSX'
