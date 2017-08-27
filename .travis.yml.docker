@@ -89,7 +89,7 @@ script:
 ## travis/docker: Errno::EROFS: Read-only file system @ dir_s_mkdir - /etc/ansible/roles/juju4.rekall/test/integration/${suite}/serverspec/.bundle
 #  - 'sudo docker exec --tty "$(cat ${container_id})" /etc/ansible/roles/juju4.rekall/test/integration/${suite}/serverspec/run-local-tests.sh'
 
-   - docker exec --tty "$(cat ${container_id})" /usr/local/share/env-rekall/bin/rekall --version
+  - docker exec --tty "$(cat ${container_id})" /usr/local/share/env-rekall/bin/rekall --version
 
 after_failure:
   # Check what happened on systemd systems.
@@ -102,4 +102,3 @@ after_script:
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
-
