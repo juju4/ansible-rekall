@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 if $programname == 'rekall' then            /var/log/rekall.log
 {% if syslogclient_rekall_syslog_target is defined and rekall_syslog_target != '' %}
 if $programname == 'rekall' then            {{ rekall_syslog_target }}
