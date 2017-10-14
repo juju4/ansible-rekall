@@ -29,7 +29,7 @@
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   with_items:
-    - { n: pyasn1, v: 0.3.3 }
+    - { n: pyasn1, v: 0.3.7 }
 
 - name: Install rekall inside virtualenv
   pip:
