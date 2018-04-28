@@ -18,7 +18,7 @@
             mode: '0644'
             backup: yes
         - include: "immutable.yml target_dir=/lib/systemd/system state=post"
-      when: systemdconf|failed
+      when: systemdconf is failed
     - name: enable and start rekall-agent systemd service
       service:
         name: rekall-agent
