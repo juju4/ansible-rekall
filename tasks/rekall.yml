@@ -59,6 +59,15 @@
   register: pkg_result
   until: pkg_result is success
 
+- name: Enforce Future 0.16 in virtualenv - rekall#448
+  pip:
+    name: future
+    state: present
+    version: 0.16.0
+    virtualenv: "{{ rekall_virtualenv }}"
+  register: pkg_result
+  until: pkg_result is success
+
 - name: add symlink to /usr/local/bin
   file:
     src: "{{ rekall_virtualenv }}/bin/rekall"
