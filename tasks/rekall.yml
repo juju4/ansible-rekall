@@ -38,7 +38,7 @@
 
 - name: Install rekall inside virtualenv
   pip:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   with_items:
@@ -50,7 +50,7 @@
   until: pkg_result is success
 - name: Install rekall-agent inside virtualenv
   pip:
-    name: "{{item}}"
+    name: "{{ item }}"
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   with_items:
