@@ -12,4 +12,3 @@ rekall_deps:
 #  - python-dev
 
 virtualenv_exec: /opt/local/bin/virtualenv-3.6
-

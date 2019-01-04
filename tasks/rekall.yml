@@ -13,6 +13,8 @@
     version: 33.1.1
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
+  register: pkg_result
+  until: pkg_result is success
 ## Result 'ImportError: No module named six.moves'
 #  pip: "name=setuptools version=34.3.3 state=present virtualenv={{ rekall_virtualenv }}"
 - name: Install recent pip inside virtualenv
@@ -21,6 +23,8 @@
     version: 9.0.1
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
+  register: pkg_result
+  until: pkg_result is success
 
 - name: Install versioned requirements inside virtualenv
   pip:
@@ -41,7 +45,8 @@
     - rekall
 ## to keep SNI issue at bay on older python
     - urllib3[secure]
-
+  register: pkg_result
+  until: pkg_result is success
 - name: Install rekall-agent inside virtualenv
   pip:
     name: "{{item}}"
@@ -50,6 +55,8 @@
   with_items:
     - rekall-agent
   when: rekall_with_agent
+  register: pkg_result
+  until: pkg_result is success
 
 - name: add symlink to /usr/local/bin
   file:
@@ -61,5 +68,5 @@
   git:
     repo: https://github.com/google/rekall-profiles.git
     dest: "{{ rekall_profiles }}"
+    version: "{{ rekall_profiles_version | default('bd3ed58f5055854c6ce7607f1580388edb1ce223') }}"
   when: rekall_dl_profiles
-

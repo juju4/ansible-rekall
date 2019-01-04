@@ -7,4 +7,3 @@
     - rekallagent_etc: '/etc/rekall-server'
   roles:
     - juju4.rekall
-

@@ -18,4 +18,3 @@ rekall_deps:
   - openssl-devel
   - libffi-devel
   - python-devel
-

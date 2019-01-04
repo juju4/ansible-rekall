@@ -50,4 +50,3 @@
       notify:
         - rekallagent restart
   when: rekallagent_servername != 'localhost'
-

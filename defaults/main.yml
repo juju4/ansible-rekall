@@ -24,4 +24,3 @@ rekall_win_url: 'https://github.com/google/rekall/releases/download/v1.6.0/Rekal
 ## not supported currently by win_get_url
 #rekall_win_hash: 'sha256:aaaa'
 rekall_win_dest: 'c:\Windows'
-

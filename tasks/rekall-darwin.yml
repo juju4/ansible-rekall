@@ -2,9 +2,10 @@
 
 - name: rekall dependencies install
   macports:
-    name: "{{item}}"
+    name: "{{ rekall_deps }}"
     state: present
-  with_items: "{{ rekall_deps }}"
+  register: pkg_result
+  until: pkg_result is success
 
 #- include: gcc.yml
 
@@ -17,6 +18,8 @@
         state: present
         virtualenv: "{{ rekall_virtualenv }}"
         virtualenv_command: "{{ virtualenv_exec }}"
+      register: pkg_result
+      until: pkg_result is success
   rescue:
     - include: "google-santa-whitelist.yml type=hash path={{ rekall_virtualenv }}/bin/python3.6 action=whitelist match=White"
     - name: Install recent setuptools inside virtualenv
@@ -26,6 +29,8 @@
         state: present
         virtualenv: "{{ rekall_virtualenv }}"
         virtualenv_command: "{{ virtualenv_exec }}"
+      register: pkg_result
+      until: pkg_result is success
 
 ## Result 'ImportError: No module named six.moves'
 #  pip: "name=setuptools version=34.3.3 state=present virtualenv={{ rekall_virtualenv }}"
@@ -36,8 +41,9 @@
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
     virtualenv_command: "{{ virtualenv_exec }}"
+  register: pkg_result
+  until: pkg_result is success
 
-## FIXME! {"cmd": "/usr/local/share/env-rekall/bin/pip install rekall", "failed": true, "item": "rekall", "msg": "stdout: Collecting rekall\n  Downloading rekall-1.6.0.zip (301kB)\n    Complete output from command python setup.py egg_info:\n    Traceback (most recent call last):\n      File \"<string>\", line 1, in <module>\n      File \"/private/tmp/pip-build-50syky1k/rekall/setup.py\", line 55\n        print \"Installing rekall-core from local directory.\"\n                                                           ^\n    SyntaxError: Missing parentheses in call to 'print'\n    \n    ----------------------------------------\n\n:stderr: Command \"python setup.py egg_info\" failed with error code 1 in /private/tmp/pip-build-50syky1k/rekall/\n"}
 - name: Install rekall inside virtualenv
   pip:
     name: "{{item}}"
@@ -49,6 +55,8 @@
     - rekall
 ## to keep SNI issue at bay on older python
     - urllib3[secure]
+  register: pkg_result
+  until: pkg_result is success
 - name: Install rekall-agent inside virtualenv
   pip:
     name: "{{item}}"
@@ -58,6 +66,8 @@
   with_items:
     - rekall-agent
   when: rekall_with_agent
+  register: pkg_result
+  until: pkg_result is success
 
 - name: add symlink to /usr/local/bin
   file:
@@ -70,4 +80,3 @@
     repo: https://github.com/google/rekall-profiles.git
     dest: "{{ rekall_profiles }}"
   when: rekall_dl_profiles
-
