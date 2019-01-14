@@ -1,4 +1,4 @@
-## {{ ansible_managed }}
+{{ ansible_managed | comment }}
 [Unit]
 Description=Rekall agent service
 After=network.target syslog.target
