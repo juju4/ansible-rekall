@@ -29,32 +29,23 @@
 
 - name: Install versioned requirements inside virtualenv
   pip:
-    name: "{{ item.n }}"
-    version: "{{ item.v }}"
+    name: pyasn1
+    version: 0.4.2
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
-  with_items:
-    - { n: pyasn1, v: 0.4.2 }
 
 - name: Install rekall inside virtualenv
   pip:
-    name: "{{ item }}"
+    name: ['wheel', 'rekall', 'urllib3[secure]']
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
-  with_items:
-    - wheel
-    - rekall
-## to keep SNI issue at bay on older python
-    - urllib3[secure]
   register: pkg_result
   until: pkg_result is success
 - name: Install rekall-agent inside virtualenv
   pip:
-    name: "{{ item }}"
+    name: rekall-agent
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
-  with_items:
-    - rekall-agent
   when: rekall_with_agent
   register: pkg_result
   until: pkg_result is success
