@@ -1,7 +1,6 @@
 ---
 
 - hosts: all
-#- hosts: test-kitchen
   vars:
     - rekall_with_agentserver: true
     - rekallagent_etc: '/etc/rekall-server'
