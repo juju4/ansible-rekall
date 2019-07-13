@@ -25,14 +25,14 @@
         enabled: yes
         state: 'started'
       ignore_errors: true
-      when: rekall_with_agent_service_enabled
+      when: rekall_with_agent_service_enabled|bool
     - name: disable and stop rekall-agent systemd service
       service:
         name: rekall-agent
         enabled: no
         state: 'stopped'
       ignore_errors: true
-      when: not rekall_with_agent_service_enabled
+      when: not rekall_with_agent_service_enabled|bool
   when: ansible_service_mgr == 'systemd'
 
 - block:

@@ -17,6 +17,6 @@
   when: ansible_distribution == 'MacOSX'
 
 - include: rekall-agent-http-server.yml
-  when: rekall_with_agentserver
+  when: rekall_with_agentserver|bool
 - include: rekall-agent.yml
-  when: rekall_with_agent
+  when: rekall_with_agent|bool

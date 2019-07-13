@@ -70,4 +70,4 @@
     repo: https://github.com/google/rekall-profiles.git
     dest: "{{ rekall_profiles }}"
     version: "{{ rekall_profiles_version | default('bd3ed58f5055854c6ce7607f1580388edb1ce223') }}"
-  when: rekall_dl_profiles
+  when: rekall_dl_profiles|bool
