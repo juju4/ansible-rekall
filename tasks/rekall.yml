@@ -59,6 +59,15 @@
   register: pkg_result
   until: pkg_result is success
 
+- name: Enforce pyaff4 in virtualenv - rekall#493
+  pip:
+    name: pyaff4
+    state: present
+    version: 0.26.post6
+    virtualenv: "{{ rekall_virtualenv }}"
+  register: pkg_result
+  until: pkg_result is success
+
 - name: add symlink to /usr/local/bin
   file:
     src: "{{ rekall_virtualenv }}/bin/rekall"
