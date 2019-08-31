@@ -36,7 +36,7 @@
 
 - name: Install rekall inside virtualenv
   pip:
-    name: ['wheel', 'rekall', 'urllib3[secure]']
+    name: ['wheel', rekall_pypi_name, 'urllib3[secure]']
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
