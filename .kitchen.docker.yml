@@ -55,3 +55,6 @@ suites:
     includes:
       - ubuntu-16.04
       - centos-7
+  - name: default-HEAD
+    run_list:
+    attributes:

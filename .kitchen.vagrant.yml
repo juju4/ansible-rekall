@@ -33,3 +33,6 @@ suites:
       - ubuntu-18.04
       - ubuntu-16.04
       - centos-7.1
+  - name: default-HEAD
+    run_list:
+    attributes:
