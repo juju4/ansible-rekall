@@ -1,8 +1,10 @@
 ---
 
-- name: Ensure rsyslog is present
+- name: Ensure logging tools are present
   package:
-    name: rsyslog
+    name:
+      - rsyslog
+      - logrotate
     state: present
   register: pkg_result
   until: pkg_result is success
