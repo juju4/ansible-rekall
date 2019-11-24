@@ -2,7 +2,7 @@
 
 rekall_deps:
   - python3
-  - python-virtualenv
+  - python3-virtualenv
   - ncurses-devel
   - git
   - gcc-c++
@@ -17,4 +17,4 @@ rekall_deps:
   - gcc
   - openssl-devel
   - libffi-devel
-  - python-devel
+  - python3-devel
