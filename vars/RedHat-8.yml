@@ -1,0 +1,20 @@
+---
+
+rekall_deps:
+  - python3
+  - python-virtualenv
+  - ncurses-devel
+  - git
+  - gcc-c++
+  - readline
+  - patch
+  - make
+## not needed in kitchen/lxd
+#  - readline-devel
+#  - readline-static
+  - libstdc++-devel
+## SNI
+  - gcc
+  - openssl-devel
+  - libffi-devel
+  - python-devel
