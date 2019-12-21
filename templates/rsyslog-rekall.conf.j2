@@ -3,9 +3,9 @@
 if $programname == 'rekall' then            /var/log/rekall.log
 {% if syslogclient_rekall_syslog_target is defined and rekall_syslog_target != '' %}
 if $programname == 'rekall' then            {{ rekall_syslog_target }}
-{% endif %}
-{% if rsyslog_v.stdout is defined and rsyslog_v.stdout|int is version_compare('8.0', '<') %}
+{% if rsyslog_v.stdout is defined and rsyslog_v.stdout|string is version_compare('8.0', '<') %}
 & ~
 {% else %}
 & stop
+{% endif %}
 {% endif %}
