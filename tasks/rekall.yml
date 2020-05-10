@@ -41,18 +41,14 @@
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
-# 7.14.0 NOK. Requirement.parse('prompt-toolkit<3.0.0')
-- name: Ubuntu 20.04 | Install ipython 7.8 - rekall#513
+- name: Ubuntu 20.04 | Use rekall master - rekall#518
   pip:
-    name: ipython
-    version: 7.8.0
-    state: present
-    virtualenv: "{{ rekall_virtualenv }}"
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
-
-- name: Ubuntu 20.04 | Use rekall-core master - rekall#518
-  pip:
-    name: git+https://github.com/google/rekall.git@c5d68e31705f4b5bd2581c1d951b7f6983f7089c#egg=rekall-core-dev&subdirectory=rekall-core
+    name:
+      - git+https://github.com/google/rekall.git@c5d68e31705f4b5bd2581c1d951b7f6983f7089c#egg=rekall-core-dev&subdirectory=rekall-core
+      - git+https://github.com/google/rekall.git@c5d68e31705f4b5bd2581c1d951b7f6983f7089c#egg=rekall-efilter-dev&subdirectory=rekall-efilter
+      - git+https://github.com/google/rekall.git@c5d68e31705f4b5bd2581c1d951b7f6983f7089c#egg=rekall-lib-dev&subdirectory=rekall-lib
+      - git+https://github.com/google/rekall.git@c5d68e31705f4b5bd2581c1d951b7f6983f7089c#egg=rekall-yara-dev&subdirectory=rekall-yara
+      - git+https://github.com/google/rekall.git@c5d68e31705f4b5bd2581c1d951b7f6983f7089c#egg=rekall-dev
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
@@ -92,10 +88,26 @@
   register: pkg_result
   until: pkg_result is success
 
+- name: Ubuntu 20.04 | Ensure active rekall requires pypykatz==0.3.9
+  replace:
+    dest: "{{ rekall_virtualenv }}/lib/python3.8/site-packages/rekall_core-1.7.3.dev59-py3.8.egg-info/requires.txt"
+    regexp: '^pypykatz==.*'
+    replace: '^pypykatz==0.3.9'
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+
 - name: Ubuntu 20.04 | Install pypykatz 0.3.9 - rekall#526
   pip:
     name: pypykatz
     version: 0.3.9
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+
+# 7.14.0 NOK. Requirement.parse('prompt-toolkit<3.0.0')
+- name: Ubuntu 20.04 | Install ipython 7.8 - rekall#513
+  pip:
+    name: ipython
+    version: 7.8.0
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
