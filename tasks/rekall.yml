@@ -65,14 +65,6 @@
   register: pkg_result
   until: pkg_result is success
 
-- name: Ubuntu 20.04 | Install pypykatz 0.3.9 - rekall#526
-  pip:
-    name: pypykatz
-    version: 0.3.9
-    state: present
-    virtualenv: "{{ rekall_virtualenv }}"
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
-
 - name: Install rekall-agent inside virtualenv
   pip:
     name: rekall-agent
@@ -99,6 +91,14 @@
     virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
   until: pkg_result is success
+
+- name: Ubuntu 20.04 | Install pypykatz 0.3.9 - rekall#526
+  pip:
+    name: pypykatz
+    version: 0.3.9
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
 - name: add symlink to /usr/local/bin
   file:
