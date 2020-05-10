@@ -21,7 +21,7 @@
 - name: Install recent pip inside virtualenv
   pip:
     name: pip
-    version: 9.0.1
+    version: '20.1'
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
