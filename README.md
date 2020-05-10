@@ -6,15 +6,18 @@ Ansible role to setup Rekall Memory Forensic Framework
 http://www.rekall-forensic.com/
 https://github.com/google/rekall
 
+Warning! Rekall is currently in [limited maintenance mode](https://github.com/google/rekall/issues/518#issuecomment-570610707)
+
 ## Requirements & Dependencies
 
 ### Ansible
 It was tested on the following versions:
  * 2.2
+ * 2.9
 
 ### Operating systems
 
-Ubuntu 14.04, 16.04 and Centos7
+Ubuntu 16.04, 18.04, 20.04, Centos7 and Centos8
 
 ## Example Playbook
 
