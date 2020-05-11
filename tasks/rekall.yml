@@ -88,7 +88,7 @@
 - name: Ubuntu 20.04 | Ensure active rekall requires pypykatz==0.3.9
   replace:
     dest: "{{ rekall_virtualenv }}/lib/python3.8/site-packages/rekall_core-1.7.3.dev59.dist-info/METADATA"
-    regexp: '^Requires-Dist: pypykatz (==.*)'
+    regexp: '^Requires-Dist: pypykatz \(==.*\)'
     replace: 'Requires-Dist: pypykatz (==0.3.9)'
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
