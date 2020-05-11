@@ -34,5 +34,8 @@ end
 describe command('/usr/local/bin/rekall --version') do
   its(:stdout) { should match /This is Rekall Version/ }
   its(:stderr) { should_not match /pkg_resources.ContextualVersionConflict/ }
+  its(:stderr) { should_not match /VersionConflict/ }
+  its(:stderr) { should_not match /Error/ }
+  # its(:stderr) { should match /^$/ }
   its(:exit_status) { should eq 0 }
 end
