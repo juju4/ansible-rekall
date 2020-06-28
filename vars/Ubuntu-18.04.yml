@@ -3,6 +3,7 @@
 rekall_deps:
   - python3
   - python3-virtualenv
+  - python-virtualenv
   - libncurses5-dev
   - git
   - gcc
