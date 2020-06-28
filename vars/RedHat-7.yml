@@ -19,4 +19,4 @@ rekall_deps:
   - libffi-devel
   - python36-devel
 
-rekall_python: python36
+rekall_python: python3.6
