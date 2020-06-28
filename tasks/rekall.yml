@@ -75,6 +75,7 @@
     virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
   until: pkg_result is success
+  when: rekall_version != 'HEAD'
 
 - name: Enforce pyaff4 in virtualenv - rekall#493
   pip:
@@ -84,13 +85,16 @@
     virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
   until: pkg_result is success
+  when: rekall_version != 'HEAD'
 
 - name: Ubuntu 20.04 | Ensure active rekall requires pypykatz==0.3.9
   replace:
     dest: "{{ rekall_virtualenv }}/lib/python3.8/site-packages/rekall_core-1.7.3.dev59.dist-info/METADATA"
     regexp: '^Requires-Dist: pypykatz \(==.*\)'
     replace: 'Requires-Dist: pypykatz (==0.3.9)'
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+  when: >
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+    rekall_version != 'HEAD'
 
 - name: Ubuntu 20.04 | Install pypykatz 0.3.9 - rekall#526
   pip:
@@ -98,7 +102,9 @@
     version: 0.3.9
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+  when: >
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+    rekall_version != 'HEAD'
 
 # 7.14.0 NOK. Requirement.parse('prompt-toolkit<3.0.0')
 - name: Ubuntu 20.04 | Install ipython 7.8 - rekall#513
@@ -107,7 +113,9 @@
     version: 7.8.0
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+  when: >
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
+    rekall_version != 'HEAD'
 
 - name: add symlink to /usr/local/bin
   file:
