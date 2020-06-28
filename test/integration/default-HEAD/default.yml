@@ -5,4 +5,5 @@
     rekall_pypi_name: git+https://github.com/google/rekall.git@master
     rekall_version: HEAD
   roles:
+    - { role: juju4.redhat_epel, when: ansible_os_family == "RedHat" and ansible_distribution_version.split('.')[0] == '7' }
     - juju4.rekall

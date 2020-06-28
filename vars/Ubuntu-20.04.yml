@@ -13,3 +13,5 @@ rekall_deps:
   - libssl-dev
   - libffi-dev
   - python3-dev
+
+rekall_python: python3
