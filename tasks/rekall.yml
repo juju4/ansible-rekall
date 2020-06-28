@@ -76,7 +76,6 @@
     virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
   until: pkg_result is success
-  when: rekall_version is undefined or rekall_version != 'HEAD'
 
 - name: Enforce pyaff4 in virtualenv - rekall#493
   pip:
