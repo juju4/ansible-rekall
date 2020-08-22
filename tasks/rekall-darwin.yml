@@ -14,7 +14,7 @@
     - name: Install recent setuptools inside virtualenv
       pip:
         name: setuptools
-        version: 33.1.1
+        version: '49.6.0'
         state: present
         virtualenv: "{{ rekall_virtualenv }}"
         virtualenv_command: "{{ virtualenv_exec }}"
@@ -25,7 +25,7 @@
     - name: Install recent setuptools inside virtualenv
       pip:
         name: setuptools
-        version: 33.1.1
+        version: '49.6.0'
         state: present
         virtualenv: "{{ rekall_virtualenv }}"
         virtualenv_command: "{{ virtualenv_exec }}"
@@ -37,7 +37,7 @@
 - name: Install recent pip inside virtualenv
   pip:
     name: pip
-    version: 9.0.1
+    version: '20.2.2'
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
     virtualenv_command: "{{ virtualenv_exec }}"
