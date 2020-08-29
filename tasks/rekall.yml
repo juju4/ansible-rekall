@@ -51,20 +51,20 @@
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
-- name: Install rekall inside virtualenv
-  pip:
-    name: ['wheel', "{{ rekall_pypi_name }}", 'urllib3[secure]']
-    state: present
-    virtualenv: "{{ rekall_virtualenv }}"
-  register: pkg_result
-  until: pkg_result is success
-
 - name: Install rekall-agent inside virtualenv
   pip:
     name: "{{ rekallagent_pypi_name }}"
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: rekall_with_agent
+  register: pkg_result
+  until: pkg_result is success
+
+- name: Install rekall inside virtualenv
+  pip:
+    name: ['wheel', "{{ rekall_pypi_name }}", 'urllib3[secure]']
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
   register: pkg_result
   until: pkg_result is success
 
