@@ -3,5 +3,6 @@
 - hosts: all
   vars:
     rekall_pypi_name: git+https://github.com/juju4/rekall.git@devel
+    rekallagent_pypi_name: git+https://github.com/juju4/rekall.git@devel#egg=rekall-agent&subdirectory=rekall-agent
   roles:
     - juju4.rekall

@@ -61,7 +61,7 @@
 
 - name: Install rekall-agent inside virtualenv
   pip:
-    name: rekall-agent
+    name: "{{ rekallagent_pypi_name }}"
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: rekall_with_agent
