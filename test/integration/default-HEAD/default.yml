@@ -2,8 +2,6 @@
 
 - hosts: all
   vars:
-    rekall_pypi_name: git+https://github.com/juju4/rekall.git@devel
-    rekallagent_pypi_name: git+https://github.com/juju4/rekall.git@devel#egg=rekall-agent&subdirectory=rekall-agent
     rekall_version: HEAD
   roles:
     - { role: juju4.redhat_epel, when: ansible_os_family == "RedHat" and ansible_distribution_major_version == '7' }
