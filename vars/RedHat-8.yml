@@ -1,7 +1,8 @@
 ---
 
 rekall_deps:
-  - python3
+  - python38
+  - python38-setuptools
   - python3-virtualenv
   - ncurses-devel
   - git
@@ -17,6 +18,6 @@ rekall_deps:
   - gcc
   - openssl-devel
   - libffi-devel
-  - python3-devel
+  - python38-devel
 
-rekall_python: python3
+rekall_python: python3.8
