@@ -25,6 +25,13 @@
       when: >
         (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 16) or
         (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 8)
+    - name: Ubuntu Focal+, Redhat 8+ | Latest rekall version requiring python>=3.7
+      set_fact:
+        rekall_pypi_name: git+https://github.com/google/rekall.git@55d1925f2df9759a989b35271b4fa48fc54a1c86
+        rekall_version: 55d1925f2df9759a989b35271b4fa48fc54a1c86
+      when: >
+        (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20) or
+        (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 8)
   tasks:
     - name: "Include juju4.rekall"
       include_role:
