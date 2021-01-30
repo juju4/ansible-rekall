@@ -42,13 +42,16 @@
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
-- name: Use rekall master - rekall#518
+- name: Ubuntu 20.04, RHEL8 | Use rekall master - rekall#518
   pip:
     name:
       - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('55d1925f2df9759a989b35271b4fa48fc54a1c86') }}{% endif %}#egg=rekall-core&subdirectory=rekall-core"  # noqa 204
       - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('55d1925f2df9759a989b35271b4fa48fc54a1c86') }}{% endif %}#egg=rekall-lib&subdirectory=rekall-lib"  # noqa 204
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
+  when: >
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20) or
+    (ansible_distribution == "RedHat" and ansible_distribution_major_version|int >= 8)
 
 - name: Install rekall-agent inside virtualenv
   pip:
