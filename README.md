@@ -10,7 +10,7 @@ Ansible role to setup Rekall Memory Forensic Framework
 http://www.rekall-forensic.com/
 https://github.com/google/rekall
 
-Warning! Rekall is currently in [limited maintenance mode](https://github.com/google/rekall/issues/518#issuecomment-570610707)
+Warning! Rekall is [no longer maintained](https://github.com/google/rekall) since Oct 2020.
 
 ## Requirements & Dependencies
 
