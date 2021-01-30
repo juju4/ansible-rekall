@@ -89,15 +89,15 @@
   until: pkg_result is success
   when: rekall_version is undefined or rekall_version != 'HEAD'
 
-- name: Ubuntu 20.04 | Install prompt-toolkit 3.0.2
+- name: Ubuntu 20.04, RHEL8 | Install prompt-toolkit 3.0.2
   pip:
     name: prompt-toolkit
     version: 3.0.2
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: >
-    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20) and
-    (rekall_version is undefined or rekall_version != 'HEAD')
+    (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20) or
+    (ansible_distribution == "RedHat" and ansible_distribution_major_version|int >= 8)
 
 - name: add symlink to /usr/local/bin
   file:
