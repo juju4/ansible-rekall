@@ -45,8 +45,8 @@
 - name: Ubuntu 20.04 | Use rekall master - rekall#518
   pip:
     name:
-      - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('c5d68e31705f4b5bd2581c1d951b7f6983f7089c') }}{% endif %}#egg=rekall-core&subdirectory=rekall-core"
-      - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('c5d68e31705f4b5bd2581c1d951b7f6983f7089c') }}{% endif %}#egg=rekall-lib&subdirectory=rekall-lib"
+      - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('c5d68e31705f4b5bd2581c1d951b7f6983f7089c') }}{% endif %}#egg=rekall-core&subdirectory=rekall-core"  # noqa 204
+      - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('c5d68e31705f4b5bd2581c1d951b7f6983f7089c') }}{% endif %}#egg=rekall-lib&subdirectory=rekall-lib"  # noqa 204
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
@@ -92,6 +92,7 @@
     dest: "{{ rekall_virtualenv }}/lib/python3.8/site-packages/rekall_core-1.7.3.dev59.dist-info/METADATA"
     regexp: '^Requires-Dist: pypykatz \(==.*\)'
     replace: 'Requires-Dist: pypykatz (==0.3.9)'
+    mode: '0644'
   when: >
     (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20) and
     (rekall_version is undefined or rekall_version != 'HEAD')
@@ -131,6 +132,7 @@
   file:
     src: "{{ rekall_virtualenv }}/bin/rekall"
     dest: "/usr/local/bin/rekall"
+    mode: '0755'
     state: link
 
 - name: recover profiles locally

@@ -6,9 +6,9 @@ rekall_deps:
   - py36-virtualenv
   - ncurses
   - git
-## SNI
-#  - libssl-dev
-#  - libffi-dev
-#  - python-dev
+  ## SNI
+  # - libssl-dev
+  # - libffi-dev
+  # - python-dev
 
 virtualenv_exec: /opt/local/bin/virtualenv-3.6

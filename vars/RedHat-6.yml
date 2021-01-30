@@ -1,7 +1,7 @@
 ---
 
 rekall_deps:
-# - python3
+  # - python3
   - python-virtualenv
   - ncurses-devel
   - git
@@ -9,11 +9,11 @@ rekall_deps:
   - readline
   - patch
   - make
-## not needed in kitchen/lxd
-#  - readline-devel
-#  - readline-static
+  ## not needed in kitchen/lxd
+  # - readline-devel
+  # - readline-static
   - libstdc++-devel
-## SNI
+  ## SNI
   - gcc
   - openssl-devel
   - libffi-devel

@@ -7,7 +7,7 @@
   register: pkg_result
   until: pkg_result is success
 
-#- include: gcc.yml
+# - include: gcc.yml
 
 ## html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
 - block:
@@ -66,6 +66,7 @@
   file:
     src: "{{ rekall_virtualenv }}/bin/rekall"
     dest: "/usr/local/bin/rekall"
+    mode: '0755'
     state: link
 
 - name: recover profiles locally

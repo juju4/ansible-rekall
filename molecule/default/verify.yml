@@ -28,26 +28,26 @@
       assert:
         that: rek.stat.exists and rek.stat.size != 0 and rek.stat.mode == '0755'
 
-  - name: Ensure rekall is running
-    command: /usr/local/share/env-rekall/bin/rekall --version
-    register: ps
-    changed_when: false
-  - name: Validate run output
-    assert:
-      that:
-        - ps.stdout
-        - "'This is Rekall Version' in ps.stdout"
-        - "'pkg_resources.ContextualVersionConflict' not in ps.stderr"
-        - "'Error' not in ps.stderr"
+    - name: Ensure rekall is running
+      command: /usr/local/share/env-rekall/bin/rekall --version
+      register: ps
+      changed_when: false
+    - name: Validate run output
+      assert:
+        that:
+          - ps.stdout
+          - "'This is Rekall Version' in ps.stdout"
+          - "'pkg_resources.ContextualVersionConflict' not in ps.stderr"
+          - "'Error' not in ps.stderr"
 
-  - name: Ensure rekall is running
-    command: /usr/local/bin/rekall --version
-    register: ps2
-    changed_when: false
-  - name: Validate run output
-    assert:
-      that:
-        - ps2.stdout
-        - "'This is Rekall Version' in ps2.stdout"
-        - "'pkg_resources.ContextualVersionConflict' not in ps2.stderr"
-        - "'Error' not in ps2.stderr"
+    - name: Ensure rekall is running
+      command: /usr/local/bin/rekall --version
+      register: ps2
+      changed_when: false
+    - name: Validate run output
+      assert:
+        that:
+          - ps2.stdout
+          - "'This is Rekall Version' in ps2.stdout"
+          - "'pkg_resources.ContextualVersionConflict' not in ps2.stderr"
+          - "'Error' not in ps2.stderr"
