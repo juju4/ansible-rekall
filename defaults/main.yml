@@ -1,9 +1,9 @@
 ---
 
 # https://pypi.org/project/rekall/#history = 1.7.2.rc1
-rekall_pypi_name: rekall
+# rekall_pypi_name: rekall
 rekallagent_pypi_name: rekall-agent
-# rekall_pypi_name: git+https://github.com/google/rekall.git@master
+rekall_pypi_name: git+https://github.com/google/rekall.git@55d1925f2df9759a989b35271b4fa48fc54a1c86
 
 rekall_virtualenv: /usr/local/share/env-rekall
 
