@@ -42,10 +42,10 @@
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
-- name: Python<3.7 | Install msldap 3.13
+- name: Python<3.7 | Install msldap 0.3.13
   pip:
     name: msldap
-    version: 3.13
+    version: 0.3.13
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: not (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
