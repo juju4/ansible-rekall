@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: rekall
   author: juju4
   description: Rekall Memory Forensic Framework
   license: BSD
