@@ -17,7 +17,8 @@
       ignore_errors: true
       register: fileinfo
 
-    - debug: var=fileinfo verbosity=1
+    - name: Debug | fileinfo output
+      debug: var=fileinfo verbosity=1
 
     - name: "santa | {{ action }} per certificate"
       command: "/usr/local/bin/santactl rule --{{ action }} --certificate --path '{{ path }}'"

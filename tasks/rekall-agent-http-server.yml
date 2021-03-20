@@ -17,7 +17,8 @@
     creates: "{{ rekallagent_roothttp }}/server.config.yaml"
   register: a
   become: yes
-- debug: var=a
+- name: Debug | initialization output
+  debug: var=a
 
 - block:
     - name: install rekall-server systemd configuration
