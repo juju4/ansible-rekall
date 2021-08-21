@@ -69,4 +69,3 @@ describe file('/var/log/rekall.log'), :if => os[:family] == 'redhat' do
   its(:content) { should match /rekall.*GET \/tickets\/HuntStatus\?action/ }
   its(:content) { should_not match /rekall.*IOError: / }
 end
-

@@ -36,4 +36,3 @@ describe command('/usr/local/bin/rekall --version') do
   its(:stderr) { should_not match /pkg_resources.ContextualVersionConflict/ }
   its(:exit_status) { should eq 0 }
 end
-

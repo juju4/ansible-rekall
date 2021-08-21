@@ -73,4 +73,3 @@ Works fine under kitchen vagrant (virtualbox)
 ## License
 
 BSD 2-clause
-
