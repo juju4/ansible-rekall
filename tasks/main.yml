@@ -1,7 +1,7 @@
 ---
 
-- include: unix.yml
+- import_tasks: unix.yml
   when: ansible_os_family != "Windows"
 
-- include: windows.yml
+- import_tasks: windows.yml
   when: ansible_os_family == "Windows"

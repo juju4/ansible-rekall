@@ -10,14 +10,20 @@
       register: systemdconf
       ignore_errors: true
     - block:
-        - include: "immutable.yml target_dir=/lib/systemd/system state=pre"
+        - import_tasks: immutable.yml
+          vars:
+            target_dir: /lib/systemd/system
+            state: pre
         - name: install rekall-agent systemd configuration
           template:
             src: "systemd-rekall-agent.service.j2"
             dest: "/lib/systemd/system/rekall-agent.service"
             mode: '0644'
             backup: yes
-        - include: "immutable.yml target_dir=/lib/systemd/system state=post"
+        - import_tasks: immutable.yml
+          vars:
+            target_dir: /lib/systemd/system
+            state: post
       when: systemdconf is failed
     - name: enable and start rekall-agent systemd service
       service:

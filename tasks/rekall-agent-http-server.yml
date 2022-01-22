@@ -47,4 +47,4 @@
       delegate_to: "{{ rekallagent_servername }}"
   when: rekallagent_servername != 'localhost'
 
-- include: logging.yml
+- import_tasks: logging.yml

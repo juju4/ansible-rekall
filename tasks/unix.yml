@@ -10,13 +10,13 @@
   include_vars: "{{ ansible_distribution }}.yml"
   when: ansible_os_family == "Alpine" or ansible_distribution == 'MacOSX'
 
-# - include: pip-upgrade.yml
-- include: rekall.yml
+# - import_tasks: pip-upgrade.yml
+- import_tasks: rekall.yml
   when: ansible_distribution != 'MacOSX'
-- include: rekall-darwin.yml
+- import_tasks: rekall-darwin.yml
   when: ansible_distribution == 'MacOSX'
 
-- include: rekall-agent-http-server.yml
+- import_tasks: rekall-agent-http-server.yml
   when: rekall_with_agentserver|bool
-- include: rekall-agent.yml
+- import_tasks: rekall-agent.yml
   when: rekall_with_agent|bool
