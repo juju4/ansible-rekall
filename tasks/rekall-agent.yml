@@ -8,7 +8,7 @@
         mode: '0644'
         backup: yes
       register: systemdconf
-      ignore_errors: true
+      failed_when: false
     - block:
         - import_tasks: immutable.yml
           vars:
@@ -30,14 +30,14 @@
         name: rekall-agent
         enabled: yes
         state: 'started'
-      ignore_errors: true
+      failed_when: false
       when: rekall_with_agent_service_enabled|bool
     - name: disable and stop rekall-agent systemd service
       service:
         name: rekall-agent
         enabled: no
         state: 'stopped'
-      ignore_errors: true
+      failed_when: false
       when: not rekall_with_agent_service_enabled|bool
   when: ansible_service_mgr == 'systemd'
 

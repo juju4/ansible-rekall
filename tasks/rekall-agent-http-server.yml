@@ -36,7 +36,7 @@
         name: rekall-server
         enabled: yes
         state: 'started'
-      ignore_errors: true
+      failed_when: false
   when: ansible_service_mgr == 'systemd'
 
 - block:
