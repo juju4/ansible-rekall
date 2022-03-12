@@ -16,3 +16,5 @@ rekall_deps:
   - python3-dev
 
 rekall_python: python3
+
+rekall_vitualenv_pip_v: 21.3.1
