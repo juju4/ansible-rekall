@@ -28,12 +28,21 @@
   register: pkg_result
   until: pkg_result is success
 
+- name: Debug | list virtualenv bin
+  command: "ls {{ rekall_virtualenv }}/bin"
+  changed_when: false
+
+- name: Debug | check pip version
+  command: "{{ rekall_virtualenv }}/bin/pip --version"
+  changed_when: false
+
 - name: Install versioned requirements inside virtualenv
   pip:
     name: pyasn1
     version: 0.4.6
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
+  when: not (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int > 20)
 
 - name: Ubuntu 20.04 | Install pybindgen inside virtualenv
   pip:
