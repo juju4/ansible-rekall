@@ -5,11 +5,11 @@
   hosts: all
   tasks:
     - name: Ensure pip packages are installed
-      command: '/usr/local/share/env-rekall/bin/pip freeze'
+      ansible.builtin.command: '/usr/local/share/env-rekall/bin/pip freeze'
       changed_when: false
       register: pfreeze
     - name: Validate config present
-      assert:
+      ansible.builtin.assert:
         that: item in pfreeze.stdout
       with_items:
         - ipython
@@ -21,19 +21,19 @@
         - six
 
     - name: Ensure rekall executable is present
-      stat:
+      ansible.builtin.stat:
         path: /usr/local/share/env-rekall/bin/rekall
       register: rek
     - name: Validate rekall present
-      assert:
+      ansible.builtin.assert:
         that: rek.stat.exists and rek.stat.size != 0 and rek.stat.mode == '0755'
 
     - name: Ensure rekall is running
-      command: /usr/local/share/env-rekall/bin/rekall --version
+      ansible.builtin.command: /usr/local/share/env-rekall/bin/rekall --version
       register: ps
       changed_when: false
     - name: Validate run output
-      assert:
+      ansible.builtin.assert:
         that:
           - ps.stdout
           - "'This is Rekall Version' in ps.stdout"
@@ -41,11 +41,11 @@
           - "'Error' not in ps.stderr"
 
     - name: Ensure rekall is running
-      command: /usr/local/bin/rekall --version
+      ansible.builtin.command: /usr/local/bin/rekall --version
       register: ps2
       changed_when: false
     - name: Validate run output
-      assert:
+      ansible.builtin.assert:
         that:
           - ps2.stdout
           - "'This is Rekall Version' in ps2.stdout"

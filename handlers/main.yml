@@ -1,7 +1,7 @@
 ---
 
 - name: rekallagent restart
-  service: name=rekall-agent state=restarted
+  ansible.builtin.service: name=rekall-agent state=restarted
 
 - name: restart rsyslog
-  service: name=rsyslog state=restarted
+  ansible.builtin.service: name=rsyslog state=restarted

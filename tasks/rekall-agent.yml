@@ -2,7 +2,7 @@
 
 - block:
     - name: install rekall-agent systemd configuration
-      template:
+      ansible.builtin.template:
         src: "systemd-rekall-agent.service.j2"
         dest: "/lib/systemd/system/rekall-agent.service"
         mode: '0644'
@@ -15,7 +15,7 @@
             target_dir: /lib/systemd/system
             state: pre
         - name: install rekall-agent systemd configuration
-          template:
+          ansible.builtin.template:
             src: "systemd-rekall-agent.service.j2"
             dest: "/lib/systemd/system/rekall-agent.service"
             mode: '0644'
@@ -26,14 +26,14 @@
             state: post
       when: systemdconf is failed
     - name: enable and start rekall-agent systemd service
-      service:
+      ansible.builtin.service:
         name: rekall-agent
         enabled: yes
         state: 'started'
       failed_when: false
       when: rekall_with_agent_service_enabled|bool
     - name: disable and stop rekall-agent systemd service
-      service:
+      ansible.builtin.service:
         name: rekall-agent
         enabled: no
         state: 'stopped'
@@ -43,14 +43,14 @@
 
 - block:
     - name: Retrieve rekall client configuration file to orchestrator
-      fetch: src="{{ item }}" dest=tmp/ mode=0400
+      ansible.builtin.fetch: src="{{ item }}" dest=tmp/ mode=0400
       with_items:
         - "{{ rekallagent_roothttp }}/client.config.yaml"
       delegate_to: "{{ rekallagent_servername }}"
     - name: ensure rekallagent etc dir exists
-      file: "dest={{ rekallagent_etc }} state=directory mode=0755"
+      ansible.builtin.file: "dest={{ rekallagent_etc }} state=directory mode=0755"
     - name: set up rekallagent config on client
-      copy: src="tmp/{{ item }}" dest="{{ rekallagent_etc }}" mode=0600
+      ansible.builtin.copy: src="tmp/{{ item }}" dest="{{ rekallagent_etc }}" mode=0600
       with_items:
         - "client.config.yaml"
       notify:

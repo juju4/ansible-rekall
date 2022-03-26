@@ -2,14 +2,14 @@
 ## https://github.com/google/rekall/tree/master/rekall-agent
 
 - name: Ensure rekall root http exists
-  file:
+  ansible.builtin.file:
     dest: "{{ rekallagent_roothttp }}"
     state: directory
     mode: '0700'
     owner: 'root'
 
 - name: initialize rekall agent
-  command: >
+  ansible.builtin.command: >
     {{ rekall_virtualenv }}/bin/rekall agent_server_initialize_http {{ rekallagent_roothttp }}/ \
       --base_url http://{{ rekallagent_ip }}:{{ rekallagent_port }}/ --bind_port {{ rekallagent_port }} \
       --client_writeback_path ~/.rekall_agent
@@ -18,11 +18,11 @@
   register: a
   become: yes
 - name: Debug | initialization output
-  debug: var=a
+  ansible.builtin.debug: var=a
 
 - block:
     - name: install rekall-server systemd configuration
-      template:
+      ansible.builtin.template:
         src: "systemd-{{ item }}.service.j2"
         dest: "/lib/systemd/system/{{ item }}.service"
         mode: '0644'
@@ -32,7 +32,7 @@
         - 'rekall-server@'
         - 'rekall-server-worker'
     - name: enable and start rekall systemd service
-      service:
+      ansible.builtin.service:
         name: rekall-server
         enabled: yes
         state: 'started'
@@ -41,7 +41,7 @@
 
 - block:
     - name: Retrieve rekall client configuration file to orchestrator
-      fetch: src="{{ item }}" dest=tmp/ mode=0400
+      ansible.builtin.fetch: src="{{ item }}" dest=tmp/ mode=0400
       with_items:
         - "{{ rekallagent_roothttp }}/client.config.yaml"
       delegate_to: "{{ rekallagent_servername }}"

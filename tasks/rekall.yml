@@ -1,7 +1,7 @@
 ---
 
 - name: rekall dependencies install
-  package: name={{ rekall_deps }} state=present
+  ansible.builtin.package: name={{ rekall_deps }} state=present
   register: pkg_result
   until: pkg_result is success
 
@@ -9,7 +9,7 @@
 
 ## html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
 - name: Install recent setuptools inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: setuptools
     version: '49.6.0'
     state: present
@@ -20,7 +20,7 @@
 ## Result 'ImportError: No module named six.moves'
 #  pip: "name=setuptools version=34.3.3 state=present virtualenv={{ rekall_virtualenv }}"
 - name: Install recent pip inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: pip
     version: "{{ rekall_vitualenv_pip_v | default('20.2.2') }}"
     state: present
@@ -29,15 +29,15 @@
   until: pkg_result is success
 
 - name: Debug | list virtualenv bin
-  command: "ls {{ rekall_virtualenv }}/bin"
+  ansible.builtin.command: "ls {{ rekall_virtualenv }}/bin"
   changed_when: false
 
 - name: Debug | check pip version
-  command: "{{ rekall_virtualenv }}/bin/pip --version"
+  ansible.builtin.command: "{{ rekall_virtualenv }}/bin/pip --version"
   changed_when: false
 
 - name: Install versioned requirements inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: pyasn1
     version: 0.4.6
     state: present
@@ -45,14 +45,14 @@
   when: not (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int > 20)
 
 - name: Ubuntu 20.04 | Install pybindgen inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: pybindgen
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 20)
 
 - name: Ubuntu 20.04, RHEL8 | Use rekall master - rekall#518
-  pip:
+  ansible.builtin.pip:
     name:
       - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('55d1925f2df9759a989b35271b4fa48fc54a1c86') }}{% endif %}#egg=rekall-core&subdirectory=rekall-core"  # noqa 204
       - "git+https://github.com/google/rekall.git{% if not (rekall_version is defined and rekall_version == 'HEAD') %}@{{ rekall_version | default('55d1925f2df9759a989b35271b4fa48fc54a1c86') }}{% endif %}#egg=rekall-lib&subdirectory=rekall-lib"  # noqa 204
@@ -63,7 +63,7 @@
     (ansible_distribution == "RedHat" and ansible_distribution_major_version|int >= 8)
 
 - name: Install rekall-agent inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: "{{ rekallagent_pypi_name }}"
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
@@ -72,7 +72,7 @@
   until: pkg_result is success
 
 - name: Install rekall inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: ['wheel', "{{ rekall_pypi_name }}", 'urllib3[secure]']
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
@@ -80,7 +80,7 @@
   until: pkg_result is success
 
 - name: Enforce Future 0.16 in virtualenv - rekall#448
-  pip:
+  ansible.builtin.pip:
     name: future
     state: present
     version: 0.16.0
@@ -89,7 +89,7 @@
   until: pkg_result is success
 
 - name: Enforce pyaff4 in virtualenv - rekall#493
-  pip:
+  ansible.builtin.pip:
     name: pyaff4
     state: present
     version: 0.26.post6
@@ -99,7 +99,7 @@
   when: rekall_version is undefined or rekall_version != 'HEAD'
 
 - name: Ubuntu 20.04, RHEL8 | Install prompt-toolkit 3.0.2
-  pip:
+  ansible.builtin.pip:
     name: prompt-toolkit
     version: 3.0.2
     state: present
@@ -109,14 +109,14 @@
     (ansible_distribution == "RedHat" and ansible_distribution_major_version|int >= 8)
 
 - name: add symlink to /usr/local/bin
-  file:
+  ansible.builtin.file:
     src: "{{ rekall_virtualenv }}/bin/rekall"
     dest: "/usr/local/bin/rekall"
     mode: '0755'
     state: link
 
 - name: recover profiles locally
-  git:
+  ansible.builtin.git:
     repo: https://github.com/google/rekall-profiles.git
     dest: "{{ rekall_profiles }}"
     version: "{{ rekall_profiles_version | default('bd3ed58f5055854c6ce7607f1580388edb1ce223') }}"

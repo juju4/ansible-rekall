@@ -12,7 +12,7 @@
 ## html5lib requires setuptools version 18.5 or above; please upgrade before installing (you have 8.0)
 - block:
     - name: Install recent setuptools inside virtualenv
-      pip:
+      ansible.builtin.pip:
         name: setuptools
         version: '49.6.0'
         state: present
@@ -28,7 +28,7 @@
         action: whitelist
         match: White
     - name: Install recent setuptools inside virtualenv
-      pip:
+      ansible.builtin.pip:
         name: setuptools
         version: '49.6.0'
         state: present
@@ -40,7 +40,7 @@
 ## Result 'ImportError: No module named six.moves'
 #  pip: "name=setuptools version=34.3.3 state=present virtualenv={{ rekall_virtualenv }}"
 - name: Install recent pip inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: pip
     version: '20.2.2'
     state: present
@@ -50,7 +50,7 @@
   until: pkg_result is success
 
 - name: Install rekall inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: ['wheel', 'rekall', 'urllib3[secure]']
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
@@ -58,7 +58,7 @@
   register: pkg_result
   until: pkg_result is success
 - name: Install rekall-agent inside virtualenv
-  pip:
+  ansible.builtin.pip:
     name: rekall-agent
     state: present
     virtualenv: "{{ rekall_virtualenv }}"
@@ -68,14 +68,14 @@
   until: pkg_result is success
 
 - name: add symlink to /usr/local/bin
-  file:
+  ansible.builtin.file:
     src: "{{ rekall_virtualenv }}/bin/rekall"
     dest: "/usr/local/bin/rekall"
     mode: '0755'
     state: link
 
 - name: recover profiles locally
-  git:
+  ansible.builtin.git:
     repo: https://github.com/google/rekall-profiles.git
     dest: "{{ rekall_profiles }}"
     version: "{{ rekall_profiles_version | default('bd3ed58f5055854c6ce7607f1580388edb1ce223') }}"
