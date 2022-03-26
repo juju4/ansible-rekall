@@ -44,6 +44,13 @@
     virtualenv: "{{ rekall_virtualenv }}"
   when: not (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int > 20)
 
+- name: Install SPARQLWrapper < 2.0.0
+  ansible.builtin.pip:
+    name: SPARQLWrapper
+    version: 1.8.5
+    state: present
+    virtualenv: "{{ rekall_virtualenv }}"
+
 - name: Ubuntu 20.04 | Install pybindgen inside virtualenv
   ansible.builtin.pip:
     name: pybindgen
